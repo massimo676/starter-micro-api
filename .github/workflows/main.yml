@@ -1,0 +1,23 @@
+import feedparser
+
+# URL del feed Atom dei terremoti dell'INGV
+url = 'http://cnt.rm.ingv.it/feed/atom/all_week'
+
+# Parsing del feed
+feed = feedparser.parse(url)
+
+# Estrazione del primo evento (che è l'ultimo in ordine cronologico)
+event = feed.entries[0]
+
+# Estrazione delle informazioni sull'evento
+magnitude = event.title.split()[0]
+location = event.title.split()[1:]
+location = ' '.join(location)
+date = event.published.split('T')[0]
+time = event.published.split('T')[1].split('+')[0]
+
+# Formattazione del messaggio da inviare su Nightbot
+message = f"Ultimo terremoto: {magnitude} - {location} ({date} alle ore {time})"
+
+# Invio del messaggio su Nightbot
+# Inserisci qui il codice per l'invio del messaggio su Nightbot
